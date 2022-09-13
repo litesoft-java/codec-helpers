@@ -6,7 +6,7 @@
 
     <groupId>org.litesoft</groupId>
     <artifactId>codec-helpers</artifactId>
-    <version>1.0.5</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>type-utils</name>

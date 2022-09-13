@@ -8,8 +8,8 @@ public class AbstractCodecWithRandomSeed extends Codec {
     protected final IntSupplier randomizingSeedSupplier;
 
     protected AbstractCodecWithRandomSeed( IntSupplier randomizingSeedSupplier,
-                                           String codexGroup, String codexSpecialization, int codexVersion ) {
-        super( codexGroup, codexSpecialization, codexVersion );
+                                           String codecGroup, String codecSpecialization, int codecVersion ) {
+        super( codecGroup, codecSpecialization, codecVersion );
         this.randomizingSeedSupplier = NotNull.AssertArgument.namedValue( "randomizingSeedSupplier", randomizingSeedSupplier );
     }
 }

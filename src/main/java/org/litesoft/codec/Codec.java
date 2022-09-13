@@ -9,17 +9,17 @@ import org.litesoft.annotations.Significant;
 public class Codec {
     private static final Map<String, Class<? extends Codec>> REGISTERED = new HashMap<>();
 
-    protected final String codexId;
+    protected final String codecId;
 
-    protected Codec( String codexGroup, String codexSpecialization, int codexVersion ) {
-        codexId = assertIdPart( "codexGroup", codexGroup ) +
-                  assertIdPart( "codexSpecialization", codexSpecialization ) +
-                  assertIdPart( "codexVersion", codexVersion ) +
+    protected Codec( String codecGroup, String codecSpecialization, int codecVersion ) {
+        codecId = assertIdPart( "codecGroup", codecGroup ) +
+                  assertIdPart( "codecSpecialization", codecSpecialization ) +
+                  assertIdPart( "codecVersion", codecVersion ) +
                   ":";
         Class<? extends Codec> us = this.getClass();
-        Class<? extends Codec> previous = REGISTERED.put( codexId, us );
+        Class<? extends Codec> previous = REGISTERED.put( codecId, us );
         if ( (previous != null) && (previous != us) ) {
-            throw new Error( "CodexId '" + codexId + "'" + ERROR_DUPLICATE_REGISTRATION_MID_TEXT +
+            throw new Error( "CodecId '" + codecId + "'" + ERROR_DUPLICATE_REGISTRATION_MID_TEXT +
                              "\n    " + previous +
                              "\n    " + us );
         }
@@ -27,11 +27,11 @@ public class Codec {
 
     private String assertIdPart( String name, String value ) {
         if ( value.contains( ":" ) ) {
-            throw new Error( "Codex Id part '" + name + "'" + ERROR_CODEX_ID_PART_CONTAINED_COLON_SUFFIX );
+            throw new Error( "Codec Id part '" + name + "'" + ERROR_CODEX_ID_PART_CONTAINED_COLON_SUFFIX );
         }
         value = Significant.ConstrainTo.valueOrNull( value );
         if ( value == null ) {
-            throw new Error( "Codex Id part '" + name + "'" + ERROR_CODEX_ID_PART_INSIGNIFICANT_SUFFIX );
+            throw new Error( "Codec Id part '" + name + "'" + ERROR_CODEX_ID_PART_INSIGNIFICANT_SUFFIX );
         }
         return value;
     }
@@ -39,7 +39,7 @@ public class Codec {
     @SuppressWarnings("SameParameterValue")
     private int assertIdPart( String name, int value ) {
         if ( value < 1 ) {
-            throw new Error( "Codex Id part '" + name + "'" + ERROR_CODEX_ID_PART_NOT_POSITIVE_SUFFIX );
+            throw new Error( "Codec Id part '" + name + "'" + ERROR_CODEX_ID_PART_NOT_POSITIVE_SUFFIX );
         }
         return value;
     }
@@ -55,13 +55,13 @@ public class Codec {
 
     protected String validateToDecode( String encoded ) {
         encoded = Significant.AssertArgument.namedValue( "encoded", encoded );
-        if ( !encoded.startsWith( codexId ) ) {
-            throw new IllegalArgumentException( errorDidNotStartWithCodexId() + limitLength( encoded ) );
+        if ( !encoded.startsWith( codecId ) ) {
+            throw new IllegalArgumentException( errorDidNotStartWithCodecId() + limitLength( encoded ) );
         }
-        if ( encoded.equals( codexId ) ) {
-            throw new IllegalArgumentException( errorOnlyCodexId() );
+        if ( encoded.equals( codecId ) ) {
+            throw new IllegalArgumentException( errorOnlyCodecId() );
         }
-        return encoded.substring( codexId.length() );
+        return encoded.substring( codecId.length() );
     }
 
     private static String limitLength( String value ) {
@@ -70,13 +70,13 @@ public class Codec {
     }
 
     @PackageFriendlyForTesting
-    String errorDidNotStartWithCodexId() {
-        return "supplied encoded string did NOT start with '" + codexId + "', encoded string was: ";
+    String errorDidNotStartWithCodecId() {
+        return "supplied encoded string did NOT start with '" + codecId + "', encoded string was: ";
     }
 
     @PackageFriendlyForTesting
-    String errorOnlyCodexId() {
-        return "supplied encoded string consisted ONLY of '" + codexId + "'";
+    String errorOnlyCodecId() {
+        return "supplied encoded string consisted ONLY of '" + codecId + "'";
     }
 
     @PackageFriendlyForTesting
@@ -88,7 +88,7 @@ public class Codec {
 
     @PackageFriendlyForTesting
     static final String ERROR_DUPLICATE_REGISTRATION_MID_TEXT = " -- duplicate registration attempted, classes are:";
-    static final String ERROR_CODEX_ID_PART_CONTAINED_COLON_SUFFIX = " must NOT contain a ':' colon (reserved for Codex Id terminating character)";
+    static final String ERROR_CODEX_ID_PART_CONTAINED_COLON_SUFFIX = " must NOT contain a ':' colon (reserved for Codec Id terminating character)";
     static final String ERROR_CODEX_ID_PART_INSIGNIFICANT_SUFFIX = " must NOT be null or empty";
     static final String ERROR_CODEX_ID_PART_NOT_POSITIVE_SUFFIX = " MUST be positive (1 or greater)";
 
