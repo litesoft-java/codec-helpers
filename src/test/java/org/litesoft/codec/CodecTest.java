@@ -85,7 +85,7 @@ class CodecTest {
         catch ( Error e ) {
             String msg = e.getMessage();
             if ( !msg.contains( errorTextContains ) ) {
-                throw new RuntimeException(e);
+                throw new RuntimeException( e );
             }
         }
     }
